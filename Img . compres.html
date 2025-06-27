@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to compress your images while maintaining quality. Reduce file size for JPG, PNG, and WebP images quickly.">
+    <meta name="keywords" content="image compressor, optimize images, reduce image size, online image tool, JPG compressor, PNG optimizer">
+    <title>Free Online Image Compression Tool | Optimize JPG, PNG, WebP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border: #e9ecef;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        main {
+            padding: 40px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .card-header p {
+            color: var(--text-light);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 30px;
+            position: relative;
+            background-color: var(--primary-light);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .upload-area.active {
+            border-color: var(--success);
+            background-color: rgba(76, 201, 240, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .upload-area p {
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .upload-area .file-info {
+            font-size: 0.9rem;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: var(--secondary);
+        }
+
+        .slider-container .slider-value {
+            width: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        select, input[type="number"], button {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            transition: var(--transition);
+        }
+
+        select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-icon {
+            font-size: 1.2rem;
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            padding-top: 30px;
+        }
+
+        .results h3 {
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .image-box {
+            text-align: center;
+        }
+
+        .image-box h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .image-box img:hover {
+            transform: scale(1.02);
+        }
+
+        .image-stats {
+            background-color: var(--bg);
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 20px;
+        }
+
+        .image-stats p {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .image-stats p span:first-child {
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .image-stats p span:last-child {
+            font-weight: 600;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--success);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .download-btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .ad-container {
+            margin: 40px 0;
+            text-align: center;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #b8c2cc;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b8c2cc;
+            font-size: 0.9rem;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 30px auto;
+            border: 4px solid rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--text);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--radius-sm);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: #e63946;
+        }
+
+        .toast.success {
+            background-color: var(--success);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--card-bg);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                transform: translateY(-150%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 99;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .upload-area {
+                padding: 30px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <i class="fas fa-compress-alt"></i>
+                <span>ImageCompressor</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/features">Features</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>Optimize Your Images in Seconds</h1>
+            <p>Reduce image file size without sacrificing quality. Perfect for websites, social media, and faster loading times.</p>
+        </section>
+        
+        <!-- Top Ad Unit -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <!-- Replace with your AdSense ad unit code -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        
+        <section class="card">
+            <div class="card-header">
+                <h2>Image Compression Tool</h2>
+                <p>Upload your image and adjust the settings below</p>
+            </div>
+            
+            <div id="upload-area" class="upload-area">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Drag & Drop Your Image</h3>
+                <p>or click to browse files</p>
+                <p class="file-info">Supports JPG, PNG, WebP (Max: 10MB)</p>
+                <input type="file" id="file-input" accept="image/jpeg, image/png, image/webp">
+            </div>
+            
+          
